@@ -4,7 +4,7 @@ import 'dart:isolate';
 
 Isolate isolate;
 
-void start() async {
+Future<void> start() async {
   ReceivePort receivePort =
       ReceivePort(); //port for this main isolate to receive messages.
   isolate = await Isolate.spawn(runTimer, receivePort.sendPort);
@@ -23,20 +23,20 @@ void runTimer(SendPort sendPort) {
   });
 }
 
-void stop() {
+Future<void> stop() async {
   if (isolate != null) {
     stdout.writeln('killing isolate');
-    isolate.kill(priority: Isolate.immediate);
+    await isolate.kill(priority: Isolate.immediate);
     isolate = null;
   }
 }
 
-void main() async {
+Future<void> main() async {
   stdout.writeln('spawning isolate...');
   await start();
   stdout.writeln('press enter key to quit...');
   await stdin.first;
-  stop();
+  await stop();
   stdout.writeln('goodbye!');
   exit(0);
 }
