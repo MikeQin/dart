@@ -1,15 +1,17 @@
 import 'dart:math';
 
 void main() {
-  var a = List<int>.generate(30, (int index) => index);
-  var input = [];
-  var output = [];
-  for (int i = 1; i < a.length; i++) {
-    input.add(a[i] * a[i] + a[i] * a[i]);
+  var a = List<double>.generate(16, (int index) => index * 1.0);
+  var input = <double>[];
+  var output = <double>[];
+  for (int i = 9; i < a.length; i++) {
+    input.add(a[i] * 2 - 1);
   }
-  print("input: $input");
-  for (int i in input) {
-    output.add(pow(i, 3) - 33);
+  print("input: ${input[input.length - 1]}");
+  print(input);
+  for (double i in input) {
+    output.add(i * 3 - 3);
   }
-  print("output: $output");
+  print("output: ${output[output.length - 1]}");
+  print(output);
 }
