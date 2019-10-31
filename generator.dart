@@ -20,10 +20,20 @@ void main() {
   // loop 2: for each
   //numbers.forEach(print);
 
+  print('sync loop using forEach...');
+  getRange(1, 10).forEach(print);
+
+  print('async loop using listen...');
   fetchDoubles(1, 10).listen(print);
 }
 
+// sinle value in sync
+int addOne(int number) {
+  return number + 1;
+}
+
 // Generator
+// multiple values in sync
 Iterable<int> getRange(int start, int finish) sync* {
   // for (int i = start; i <= finish; i++) {
   //   yield i;
@@ -35,16 +45,18 @@ Iterable<int> getRange(int start, int finish) sync* {
     // for (final val in getRange(start + 1, finish)) {
     //   yield val;
     // }
-    yield* getRange(start + 1, finish);
+    yield* getRange(addOne(start), finish);
   }
 }
 
+// single value in async
 Future<int> fetchDouble(int val) async {
   // Fetch val * 2 from the server
   return await val * 2;
 }
 
 // Async Generator
+// multiple values in async
 Stream<int> fetchDoubles(int start, int finish) async* {
   // for (int i = start; i <= finish; i++) {
   //   yield await fetchDouble(i);
